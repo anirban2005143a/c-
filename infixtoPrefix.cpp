@@ -51,9 +51,13 @@ int main()
                 }
                 else if (um[s[i]] < um[st.top()])
                 {
-                    ans += st.top();
-                    st.pop();
+                    while ( !st.empty() && um[st.top()] > um[s[i]])
+                    {
+                        ans += st.top();
+                        st.pop();
+                    }
                     st.push(s[i]);
+                   
                 }
             }
             else

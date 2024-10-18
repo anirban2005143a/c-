@@ -4,10 +4,9 @@ using namespace std;
 int binarySearch(int arr[], int n, int key)
 {
     int s = 0;
-    int e = n;
+    int e = n-1;
 
     int mid = (s + e) / 2;
-    int count = 0;
     while (s <= e)
     {    
 
