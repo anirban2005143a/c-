@@ -1,46 +1,80 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void sort(vector<int> &arr)
+class heap
 {
-  int n = arr.size();
+public:
+  int arr[100] = {0,60,40,30,50,70 ,20};
+  int size = 6;
 
-  for (int i = 1; i < n; i++)
+  void takeInput(int key)
   {
-    int j = i;
+    size++;
+    arr[size] = key;
+  }
 
-    while (j>0)
+  void heapify(int i)
+  {
+    int left = 2 * i;
+    int right = 2 * i + 1;
+
+    while ((left <= size || right <= size) && (arr[left] > arr[i] || arr[right] > arr[i]))
     {
-        if(arr[j-1] > arr[j]){
-            swap(arr[j-1] , arr[j]);
-        }
-            j--;
+      if (arr[left] > arr[right])
+      {
+        swap(arr[left], arr[i]);
+        i = left;
+      }
+      else
+      {
+        swap(arr[right], arr[i]);
+        i = right;
+      }
+      left = 2 * i;
+      right = 2 * i + 1;
     }
   }
 
-}
+  void insert(int val)
+  {
+    size++;
+    arr[size] = val;
+    int c = size;
+    int p = c / 2;
+
+    while (c > 1 && arr[p] < arr[c])
+    {
+      swap(arr[p], arr[c]);
+      c = p;
+      p = c / 2;
+    }
+  }
+
+  void print()
+  {
+    for (int i = 1; i <= size; i++)
+    {
+      cout << arr[i] << " ";
+    }
+    cout << endl;
+  }
+};
 
 int main()
 {
+  heap h;
+  int n = 6;
 
-    int n;
-    cin >> n;
+  for (int i = n/2; i >=1 ; i--)
+  {
+    h.heapify(i);
+  }
+  
+  h.print();
 
-    vector<int> arr;
+  h.insert(80);
 
-    for (int i = 0; i < n; i++)
-    {
-        int temp;
-        cin >> temp;
-        arr.push_back(temp);
-    }
+  h.print();
 
-    sort(arr);
-
-   for(int i: arr){
-    cout<<i<<" ";
-   }
-    
-
-    return 0;
+  return 0;
 }
