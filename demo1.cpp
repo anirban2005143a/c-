@@ -1,195 +1,231 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class heap
+class Node
 {
 public:
-  int arr[100] = {0, 60, 40, 30, 50, 70, 20};
-  int size = 6;
+  int data;
+  Node *left;
+  Node *right;
+  int height;
 
-  void takeInput(int val)
+  Node(int val)
   {
-    size++;
-    arr[size] = val;
-  }
-
-  void heapify_max(int i)
-  {
-    int largest = i;
-    int left = 2 * i;
-    int right = 2 * i + 1;
-
-    if (left <= size && arr[left] > arr[largest])
-    {
-      largest = left;
-    }
-
-    if (right <= size && arr[right] > arr[largest])
-    {
-      largest = right;
-    }
-
-    if (largest != i)
-    {
-      swap(arr[largest], arr[i]);
-      heapify_max(largest);
-    }
-  }
-
-  void heapify_min(int i)
-  {
-    int smallest = i;
-    int left = 2 * i;
-    int right = 2 * i + 1;
-
-    if (left <= size && arr[left] < arr[smallest])
-    {
-      smallest = left;
-    }
-
-    if (right <= size && arr[right] < arr[smallest])
-    {
-      smallest = right;
-    }
-
-    if (smallest != i)
-    {
-      swap(arr[smallest], arr[i]);
-      heapify_min(smallest);
-    }
-  }
-
-  void insert_key_maxHeap(int key)
-  {
-    takeInput(key);
-
-    int child = size;
-    int parent = child / 2;
-    while (child > 1 && arr[parent] < arr[child])
-    {
-      swap(arr[parent], arr[child]);
-      child = parent;
-      parent = child / 2;
-    }
-  }
-
-  void insert_key_minHeap(int key)
-  {
-    takeInput(key);
-
-    int child = size;
-    int parent = child / 2;
-    while (child > 1 && arr[parent] > arr[child])
-    {
-      swap(arr[parent], arr[child]);
-      child = parent;
-      parent = child / 2;
-    }
-  }
-
-  int find_max()
-  {
-    int n = sizeof(arr) / sizeof(arr[0]);
-    for (int i = n / 2; i >= 1; i--)
-    {
-      heapify_max(i);
-    }
-    return arr[1];
-  }
-
-  int find_min()
-  {
-    int n = sizeof(arr) / sizeof(arr[0]);
-    for (int i = n / 2; i >= 1; i--)
-    {
-      heapify_min(i);
-    }
-    return arr[1];
-  }
-
-  int extract_max()
-  {
-    int n = sizeof(arr) / sizeof(arr[0]);
-    for (int i = n / 2; i >= 1; i--)
-    {
-      heapify_max(i);
-    }
-
-    int temp = arr[1];
-    swap(arr[1], arr[size]);
-
-    heapify_max(1);
-
-    size--;
-
-    return temp;
-  }
-
-  int extract_min()
-  {
-    int n = sizeof(arr) / sizeof(arr[0]);
-    for (int i = n / 2; i >= 1; i--)
-    {
-      heapify_min(i);
-    }
-
-    int temp = arr[1];
-    swap(arr[1], arr[size]);
-
-    heapify_min(1);
-
-    size--;
-
-    return temp;
-  }
-
-  void print()
-  {
-    for (int i = 1; i <= size; i++)
-    {
-      cout << arr[i] << " ";
-    }
-    cout << endl;
+    data = val;
+    left = nullptr;
+    right = nullptr;
+    height = 1;
   }
 };
 
-int main()
+int height(Node *node)
 {
-  heap h;
-  int n = 6;
+  if (node == nullptr)
+    return 0;
+  return node->height;
+}
 
-  // for (int i = n / 2; i >= 1; i--)
-  // {
-  //   h.heapify_max(i);
-  // }
+int getBalance(Node *node)
+{
+  if (node == nullptr)
+    return 0;
+  return (height(node->left) - height(node->right));
+}
 
-  // h.print();
+Node *rightRotation(Node *node)
+{
+  Node *x = node->left;
+  Node *y = x->right;
 
-  // h.insert_key_maxHeap(80);
+  x->right = node;
+  node->left = y;
 
-  // h.print();
+  node->height = 1 + max(height(node->left), height(node->right));
+  x->height = 1 + max(height(x->left), height(x->right));
 
-  for (int i = n / 2; i >= 1; i--)
+  return x;
+}
+
+Node *getMinnode(Node *node)
+{
+  Node *temp = node;
+  while (temp->left != nullptr)
   {
-    h.heapify_min(i);
+    temp = temp->left;
+  }
+  return temp;
+}
+
+Node *leftRotation(Node *node)
+{
+  Node *x = node->right;
+  Node *y = x->left;
+
+  x->left = node;
+  node->right = y;
+
+  node->height = 1 + max(height(node->left), height(node->right));
+  x->height = 1 + max(height(x->left), height(x->right));
+
+  return x;
+}
+
+Node *insert(Node *node, int key)
+{
+  if (node == nullptr)
+  {
+    return new Node(key);
   }
 
-  h.print();
+  if (key > node->data)
+  {
+    node->right = insert(node->right, key);
+  }
+  else if (key < node->data)
+  {
+    node->left = insert(node->left, key);
+  }
+  else
+  {
+    return node;
+  }
 
-  // h.insert_key_minHeap(10);
+  node->height = 1 + max(height(node->left), height(node->right));
 
-  // h.print();
+  int bf = getBalance(node);
 
-  cout << h.find_min() << endl;
-  // cout << h.find_max() << endl;
+  if (bf > 1 && key < node->left->data)
+  {
+    return rightRotation(node);
+  }
 
-  // cout << h.extract_max() << endl;
-  cout << h.extract_min() << endl;
+  if (bf < -1 && key > node->right->data)
+  {
+    return leftRotation(node);
+  }
 
-  h.print();
+  if (bf > 1 && key > node->left->data)
+  {
+    node->left = leftRotation(node->left);
+    return rightRotation(node);
+  }
 
-  // cout << h.find_max() << endl;
-  cout << h.find_min() << endl;
+  if (bf < -1 && key < node->right->data)
+  {
+    node->right = rightRotation(node->right);
+    return leftRotation(node);
+  }
+  return node;
+}
+
+Node *deletetion(Node *node, int key)
+{
+  if (node == nullptr)
+  {
+    return node;
+  }
+
+  if (key < node->data)
+  {
+    node->left = deletetion(node->left, key);
+  }
+  else if (key > node->data)
+  {
+    node->right = deletetion(node->right, key);
+  }
+  else
+  {
+    if (node->left == nullptr || node->right == nullptr)
+    {
+      Node *temp = node->left ? node->left : node->right;
+
+      if (temp == nullptr)
+      {
+        temp = node;
+        node = nullptr;
+      }
+      else
+      {
+        *node = *temp;
+      }
+      delete temp;
+    }
+    else
+    {
+      Node *temp = getMinnode(node->right);
+
+      node->data = temp->data;
+
+      node->right = deletetion(node->right, temp->data);
+    }
+  }
+
+  if (node == nullptr)
+    return node;
+
+  node->height = 1 + max(height(node->left), height(node->right));
+
+  int bf = getBalance(node);
+
+  if (bf > 1 && getBalance(node->left) >= 0)
+  {
+    return rightRotation(node);
+  }
+
+  if (bf > 1 && getBalance(node->left) < 0)
+  {
+    node->left = leftRotation(node->left);
+    return rightRotation(node);
+  }
+
+  if (bf < -1 && getBalance(node->right) > 0)
+  {
+    node->right = rightRotation(node->right);
+    return leftRotation(node);
+  }
+
+  if (bf < -1 && getBalance(node->right) <= 0)
+  {
+    return leftRotation(node);
+  }
+
+  return node;
+}
+
+void preOrder(Node *node)
+{
+  if (node != nullptr)
+  {
+    cout << node->data << " ";
+    preOrder(node->left);
+    preOrder(node->right);
+  }
+}
+
+int main()
+{
+
+  Node *root = nullptr;
+
+  root = insert(root, 9);
+  root = insert(root, 5);
+  root = insert(root, 10);
+  root = insert(root, 0);
+  root = insert(root, 6);
+  root = insert(root, 11);
+  root = insert(root, -1);
+  root = insert(root, 1);
+  root = insert(root, 2);
+
+  cout << "Preorder traversal of the "
+          "constructed AVL tree is \n";
+  preOrder(root);
+
+  root = deletetion(root, 10);
+
+    cout << "\nPreorder traversal after"
+            " deletion of 10 \n";
+    preOrder(root);
 
   return 0;
 }
