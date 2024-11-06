@@ -71,6 +71,17 @@ Node *deleteNode(Node *&root, int key)
     if (root == NULL)
         return root;
 
+
+    if (key > root->data)
+    {
+        root->right = deleteNode(root->right, key);
+    }
+
+    if (key < root->data)
+    {
+        root->left = deleteNode(root->left, key);
+    }
+
     if (root->data == key)
     {
         // 0 child
@@ -108,15 +119,6 @@ Node *deleteNode(Node *&root, int key)
         }
     }
 
-    if (key > root->data)
-    {
-        root->right = deleteNode(root->right, key);
-    }
-
-    if (key < root->data)
-    {
-        root->left = deleteNode(root->left, key);
-    }
 }
 
 void inOrder(Node *root)

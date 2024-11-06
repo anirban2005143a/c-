@@ -79,42 +79,43 @@ void postOrder(Node *root)
 
 void levelOrder(Node *root)
 {
-    if (root == NULL)
-    {
+    if (root == nullptr)
         return;
-    }
 
+    // Create an empty queue for level order traversal
     queue<Node *> q;
-    q.push(root);
-    q.push(NULL);
 
-    while (!q.empty())
+    // Enqueue Root
+    q.push(root);
+
+    while (q.empty() == false)
     {
+
+        // Print front of queue and remove it from queue
         Node *node = q.front();
+        cout << node->data << " ";
         q.pop();
 
-        if (node != NULL)
-        {
-            cout << node->data << " ";
-            if (node->left)
-                q.push(node->left);
-            if (node->right)
-                q.push(node->right);
-        }
-        else if (!q.empty())
-        {
-            q.push(NULL);
-            cout<<endl;
-        }
+        // Enqueue left child
+        if (node->left != nullptr)
+            q.push(node->left);
+
+        // Enqueue right child
+        if (node->right != nullptr)
+            q.push(node->right);
     }
 }
 
 int main()
 {
 
-    Node *root = NULL;
+    Node* root = new Node(1);
+    root->left = new Node(2);
+    root->right = new Node(3);
+    root->left->left = new Node(4);
+    root->left->right = new Node(5);
 
-    enterKey(root);
+    // enterKey(root);
 
     inOrder(root);
     cout << endl;

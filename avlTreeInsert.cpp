@@ -136,22 +136,21 @@ int main() {
     Node *root = nullptr; 
     
     // Constructing tree given in the above figure 
-    // root = insert(root, 10); 
-    // root = insert(root, 20); 
-    // root = insert(root, 30); 
-    // root = insert(root, 40); 
-    // root = insert(root, 50); 
-    // root = insert(root, 25); 
+    root = insert(root, 10); 
+    root = insert(root, 20); 
+    root = insert(root, 30); 
+    root = insert(root, 40); 
+    root = insert(root, 50); 
+    root = insert(root, 25);   
 
-      root = insert(root, 9);
-    root = insert(root, 5);
-    root = insert(root, 10);
-    root = insert(root, 0);
-    root = insert(root, 6);
-    root = insert(root, 11);
-    root = insert(root, -1);
-    root = insert(root, 1);
-    root = insert(root, 2);
+    // root = insert(root, 9);
+    // root = insert(root, 6);
+    // root = insert(root, 0);
+    // root = insert(root, 10);
+    // root = insert(root, 5);
+    // root = insert(root, 1);
+    // root = insert(root, 11);
+    // root = insert(root, 2);
     
     /* The constructed AVL Tree would be 
               30 
