@@ -7,6 +7,7 @@ class heap
 public:
     int size = 6;
     int arr[100] = {0, 60, 40, 30, 50, 70, 20};
+    
 
     void printHeap()
     {

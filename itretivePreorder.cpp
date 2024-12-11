@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 class Node
@@ -16,25 +16,28 @@ public:
     }
 };
 
-void itretivePreOrder(Node * node){
-    stack<Node * >s;
+void itretivePreOrder(Node *node)
+{
+    stack<Node *> s;
     s.push(node);
 
     while (!s.empty())
     {
-        Node * temp = s.top();
+        Node *temp = s.top();
         s.pop();
-        cout<<temp->data<<" ";
+        cout << temp->data << " ";
 
-        if(temp->right) s.push(temp->right);
-        if(temp->left) s.push(temp->left);
+        if (temp->right)
+            s.push(temp->right);
+        if (temp->left)
+            s.push(temp->left);
     }
-    
 }
 
-int main(){
+int main()
+{
 
-Node *root = new Node(1);
+    Node *root = new Node(1);
     root->left = new Node(2);
     root->left->left = new Node(4);
     root->left->right = new Node(5);

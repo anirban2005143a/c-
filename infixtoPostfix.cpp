@@ -20,8 +20,8 @@ int priority(char stack_top , char ch2){
 
 int main()
 {
-    string s;
-    cin >> s;
+    string s = "a+b*c^d";
+    // cin >> s;
     stack<char> st;
     string ans = "";
 

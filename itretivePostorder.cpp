@@ -16,19 +16,18 @@ public:
     }
 };
 
-
-//not optimized code
-// void itretivePostOrder(Node *node)
-// {
-//     if (node != nullptr)
-//     {
+// not optimized code
+//  void itretivePostOrder(Node *node)
+//  {
+//      if (node != nullptr)
+//      {
 
 //         stack<Node *> s;
 //         s.push(node);
 
 //         while (!s.empty())
-//         {   
-            
+//         {
+
 //             if (node == nullptr)
 //             {
 //                 s.pop();
@@ -63,24 +62,28 @@ public:
 //     }
 // }
 
-void itretivePostOrder(Node * node){
-    if(node!= nullptr){
-        stack<Node * > s;
-        stack<Node*>res;
+void itretivePostOrder(Node *node)
+{
+    if (node != nullptr)
+    {
+        stack<Node *> s;
+        stack<Node *> res;
 
-s.push(node);
+        s.push(node);
         while (!s.empty())
         {
-            Node * temp = s.top();
+            Node *temp = s.top();
             s.pop();
             res.push(temp);
-            if(temp->left) s.push(temp->left);
-            if(temp->right) s.push(temp->right);
+            if (temp->left)
+                s.push(temp->left);
+            if (temp->right)
+                s.push(temp->right);
         }
 
         while (!res.empty())
         {
-            cout<<res.top()->data<<" ";
+            cout << res.top()->data << " ";
             res.pop();
         }
     }

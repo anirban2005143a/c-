@@ -20,25 +20,29 @@ void itretiveinOrder(Node *root)
 {
     stack<Node *> s;
 
-    Node *node =root;
+    Node *node = root;
 
     while (true)
     {
-       if(node!= nullptr){
-        s.push(node);
-        node = node->left;
-       }else{
-        if(s.empty()) break;
-        node = s.top();
-        s.pop();
-        cout<<node->data<<" ";
-        node = node->right;
-       }
+        if (node != nullptr)
+        {
+            s.push(node);
+            node = node->left;
+        }
+        else
+        {
+            if (s.empty())
+                break;
+            node = s.top();
+            s.pop();
+            cout << node->data << " ";
+            node = node->right;
+        }
     }
 }
 
 int main()
-{ 
+{
 
     Node *root = new Node(1);
     root->left = new Node(2);

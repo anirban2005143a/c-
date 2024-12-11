@@ -1,46 +1,34 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Node{
-    public:
-    int data;
-    Node * left;
-    Node * right;
-
-    Node(int val){
-        data = val;
-        left = nullptr;
-        right = nullptr;
-    }
-};
-
-void levelOrder(Node * node){
-    queue<Node * >q;
-    q.push(node);
-
-    while (!q.empty())
-    {
-        Node * temp = q.front();
-        q.pop();
-        cout<<temp->data<<" ";
-        if(temp->left) q.push(temp->left);
-        if(temp->right) q.push(temp->right);
-    }
-}
-
 int main()
 {
-     Node *root = new Node(1);
-    root->left = new Node(2);
-    root->left->left = new Node(4);
-    root->left->right = new Node(5);
-    root->left->right->left = new Node(6);
-    root->left->right->right = new Node(7);
-    root->right = new Node(3);
-    root->right->left = new Node(8);
-    root->right->right = new Node(9);
 
-    levelOrder(root);
+     int t;
+     cin >> t;
 
-    return 0;
+     while (t--)
+     {
+          int n ,k,p;
+          cin>>n>>k>>p;
+
+          vector<int> arr;
+          int max = INT_MIN;
+          int sum = 0;
+          for (int i = 0; i < n; i++)
+          {
+               int temp;
+               cin>>temp;
+               arr.push_back(temp);
+               if(max < temp) max = temp;
+               else sum += temp;
+          }
+
+          if((sum + p) == (max + k)) cout<<""<<endl;
+          else if((sum + p) > (max + k)) cout<<""<<endl;
+          else cout<<""<<endl;
+          
+     }
+
+     return 0;
 }
